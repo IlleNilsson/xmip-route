@@ -1,0 +1,11 @@
+[package]
+name = "xmip-route"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+repository = "https://github.com/IlleNilsson/xmip-route"
+description = "Xmip publication, subscriptions and routing decisions."
+
+[dependencies]
+xmip-message = { git = "https://github.com/IlleNilsson/xmip-message", rev = "e7967fc12dcc21197e8cc468b23210b244d83537" }
+xmip-contract = { git = "https://github.com/IlleNilsson/xmip-contract", rev = "8de0c03a12d9fc038a2a521bea164533643479b3" }
