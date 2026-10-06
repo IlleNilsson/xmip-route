@@ -18,7 +18,7 @@
 //!
 //! [[subscriptions]]
 //! id = "approval"
-//! destination = { process = "Approval" }
+//! destination = { work-process = "Approval" }
 //! filter = "MessageType = 'Order' and Amount > 1000"
 //! ```
 //!
@@ -118,7 +118,7 @@ mod tests {
             to("archive", send_port("Archive"), "true"),
             to(
                 "approval",
-                Subscriber::Process("Approval".to_string()),
+                Subscriber::WorkProcess("Approval".to_string()),
                 "Amount > 1000",
             ),
         ];
@@ -126,7 +126,10 @@ mod tests {
 
         assert_eq!(routing.destinations().len(), 3);
         assert_eq!(routing.dispatch(), Dispatch::Routed(3));
-        assert_eq!(routing.destinations()[2].to_string(), "Process.Approval");
+        assert_eq!(
+            routing.destinations()[2].to_string(),
+            "WorkProcess.Approval"
+        );
     }
 
     #[test]
@@ -304,7 +307,7 @@ mod tests {
     fn a_subscription_round_trips_through_toml_as_its_filter_was_written() {
         let subscription = to(
             "approval",
-            Subscriber::Process("Approval".to_string()),
+            Subscriber::WorkProcess("Approval".to_string()),
             "Amount>1000",
         )
         .requiring("Order.v2")

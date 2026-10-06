@@ -16,7 +16,7 @@ use path::expression::Expression;
 #[derive(Clone, Debug, Eq, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "kebab-case")]
 pub enum Subscriber {
-    Process(String),
+    WorkProcess(String),
     SendPort(String),
     SendGroup(String),
 }
@@ -25,14 +25,14 @@ impl Subscriber {
     #[must_use]
     pub fn name(&self) -> &str {
         match self {
-            Self::Process(name) | Self::SendPort(name) | Self::SendGroup(name) => name,
+            Self::WorkProcess(name) | Self::SendPort(name) | Self::SendGroup(name) => name,
         }
     }
 
     #[must_use]
     pub const fn kind(&self) -> &'static str {
         match self {
-            Self::Process(_) => "Process",
+            Self::WorkProcess(_) => "WorkProcess",
             Self::SendPort(_) => "SendPort",
             Self::SendGroup(_) => "SendGroup",
         }
@@ -47,7 +47,7 @@ impl std::fmt::Display for Subscriber {
 
 /// One standing interest in published Messages.
 ///
-/// The destination is an artifact — a Send Port, a Send Group or an Xmip
+/// The destination is an artifact — a Send Port, a Send Group or a Work
 /// Process. Routing decides *that* a Message goes there, never *how* it gets
 /// there.
 ///
